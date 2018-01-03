@@ -1,0 +1,11 @@
+c:\users\toni\documents\visual studio 2015\Projects\Proiect\Proiect\bin\Debug\Proiect.exe.config
+c:\users\toni\documents\visual studio 2015\Projects\Proiect\Proiect\bin\Debug\Proiect.exe
+c:\users\toni\documents\visual studio 2015\Projects\Proiect\Proiect\bin\Debug\Proiect.pdb
+c:\users\toni\documents\visual studio 2015\Projects\Proiect\Proiect\bin\Debug\Oracle.ManagedDataAccess.dll
+c:\users\toni\documents\visual studio 2015\Projects\Proiect\Proiect\obj\Debug\Proiect.csprojResolveAssemblyReference.cache
+c:\users\toni\documents\visual studio 2015\Projects\Proiect\Proiect\obj\Debug\Proiect.Form1.resources
+c:\users\toni\documents\visual studio 2015\Projects\Proiect\Proiect\obj\Debug\Proiect.Properties.Resources.resources
+c:\users\toni\documents\visual studio 2015\Projects\Proiect\Proiect\obj\Debug\Proiect.csproj.GenerateResource.Cache
+c:\users\toni\documents\visual studio 2015\Projects\Proiect\Proiect\obj\Debug\Proiect.exe
+c:\users\toni\documents\visual studio 2015\Projects\Proiect\Proiect\obj\Debug\Proiect.pdb
+C:\Users\Toni\documents\visual studio 2015\Projects\Proiect\Proiect\obj\Debug\Proiect.Form2.resources
