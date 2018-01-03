@@ -16,7 +16,9 @@ namespace Proiect
     {
         OracleConnection connection = new OracleConnection("DATA SOURCE=localhost:1521/XE;PASSWORD=student;PERSIST SECURITY INFO=True;USER ID=STUDENT");
         OracleCommand comand;
-        string strSql, newYear;
+        OracleDataAdapter da, da1, da2, da3;
+        DataSet ds, ds1, ds2, ds3;
+        string str, str1, str2, str3, newYear,strSql;
         string dbMonth;
         string dbYear;
         string dbDay;
@@ -30,8 +32,7 @@ namespace Proiect
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.pACIENTITableAdapter.Fill(this.dataSet1.PACIENTI);
-            dataGridView1.Visible = false;   
+            this.pACIENTITableAdapter.Fill(this.dataSet1.PACIENTI); 
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -179,7 +180,7 @@ namespace Proiect
             determineBirthdayYear(sex, anul.ToString());
             textDataNasterii.Text = zi.ToString() + "/" + dbMonth + "/" + newYear;
             //  textVarsta.Text = varsta.ToString();
-            textVarsta.Text = sex.ToString();
+            textVarsta.Text = newYear.ToString();
         }
         
         private void determineBirthdayYear(int sex, string an) 
