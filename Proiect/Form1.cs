@@ -159,10 +159,24 @@ namespace Proiect
 
         private void textCNPPacient_TextChanged(object sender, EventArgs e)
         {
-            cnp = Convert.ToDouble(textCNPPacient.Text);
-            anul = (Convert.ToInt32(cnp / 10000000000)) % 100;
-            luna = ((Convert.ToInt32(cnp / 100000000)) % 10000) % 100;
-            zi = ((Convert.ToInt32(cnp / 1000000)) % 1000000) % 100;
+            if(textCNPPacient.Text == "")
+            {
+                cnp = 0; anul = 0; luna = 0; zi = 0;
+            }
+            else
+            {
+                try
+                {
+                    cnp = Convert.ToDouble(textCNPPacient.Text);
+                    anul = (Convert.ToInt32(cnp / 10000000000)) % 100;
+                    luna = ((Convert.ToInt32(cnp / 100000000)) % 10000) % 100;
+                    zi = ((Convert.ToInt32(cnp / 1000000)) % 1000000) % 100;
+                } catch(MyException )
+                {
+                    Console.WriteLine("{0} First exception caught.");
+                }
+                
+            } 
         }
 
         private void textCNPPacient_Leave(object sender, EventArgs e)
