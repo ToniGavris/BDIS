@@ -14,16 +14,327 @@ namespace Proiect
 {
     public partial class Form1 : Form
     {
-        OracleConnection connection = new OracleConnection("DATA SOURCE=localhost:1521/XE;PASSWORD=student;PERSIST SECURITY INFO=True;USER ID=STUDENT");
-        OracleCommand comand;
-        OracleDataAdapter da, da1, da2, da3;
-        DataSet ds, ds1, ds2, ds3;
-        string str, str1, str2, str3, newYear,strSql;
-        string dbMonth;
-        string dbYear;
-        string dbDay;
-        double cnp;
-        int anul, luna, zi, sex;
+        OracleConnection connection;
+        OracleCommand comanda;
+        OracleCommandBuilder comand;
+        OracleDataAdapter da, da1, da2, da3, da4;
+        DataSet ds, ds1, ds2, ds3, ds4;
+        double[] numbers = new double[13];
+        string str, str1, str2, str3,strSql;
+
+        private void txtCautareCons_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAfisareCons_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                str1 = "Select * from CONSULTATII";
+                da1 = new OracleDataAdapter(str1, connection);
+                ds1 = new DataSet();
+                da1.Fill(ds1, "CONSULTATII");
+                dataGridView2.DataSource = ds1.Tables["CONSULTATII"];
+                comand = new OracleCommandBuilder(da1);
+                txtCautareCons.Text = "";
+                label2.Text = "";
+            }
+            catch(OracleException ex)
+            {
+                label2.Text = "Eroare" + ex.Message.ToString();
+            }
+
+            txtCautareCons.Text = "";
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                str2 = "Select * from VEDERE where CNP = " + "'" + textBox1.Text + "'";
+                da2 = new OracleDataAdapter(str2, connection);
+                ds2 = new DataSet();
+                da2.Fill(ds2, "vedere");
+                dataGridView3.DataSource = ds2.Tables["vedere"];
+                
+            }
+            catch (OracleException ex)
+            {
+                label4.Text = "Eroare" + ex.Message.ToString();
+            }
+
+            CrystalReport1 raport = new CrystalReport1();
+            raport.SetDataSource(ds2.Tables["vedere"]);
+            crystalReportViewer1.ReportSource = raport;
+        }
+
+        private void btnCautareAfectiune_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                str3 = "Select * from AFECTIUNI where diagnostic = " + "'" + txtCautareAfectiune.Text + "'";
+                da3 = new OracleDataAdapter(str3, connection);
+                ds3 = new DataSet();
+                da3.Fill(ds3, "AFECTIUNI");
+                dataGridView4.DataSource = ds3.Tables["AFECTIUNI"];
+            }
+            catch (OracleException ex)
+            {
+                label6.Text = "Eroare" + ex.Message.ToString();
+            }
+
+            CrystalReport2 raport2 = new CrystalReport2();
+            raport2.SetDataSource(ds3.Tables["AFECTIUNI"]);
+            crystalReportViewer2.ReportSource = raport2;
+        }
+
+        private void btnCautareCons_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                str1 = "Select * from CONSULTATII where CNP = " + "'" + txtCautareCons.Text + "'";
+                da1 = new OracleDataAdapter(str1, connection);
+                ds1 = new DataSet();
+                da1.Fill(ds1, "CONSULTATII");
+                dataGridView2.DataSource = ds1.Tables["CONSULTATII"];
+            }
+            catch (OracleException ex)
+            {
+                label2.Text = "Eroare" + ex.Message.ToString();
+            }
+        }
+
+        private void btnAfisarePacienti_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                str = "Select * from Pacienti";
+                da = new OracleDataAdapter(str, connection);
+                ds = new DataSet();
+                da.Fill(ds, "PACIENTI");
+                dataGridView1.DataSource = ds.Tables["PACIENTI"];
+                comand = new OracleCommandBuilder(da);
+                txtCautare.Text = "";
+                label1.Text = "";
+            }
+            catch(OracleException ex)
+            {
+                label1.Text = "Eroare" + ex.Message.ToString();
+            }
+
+            try
+            {
+                str1 = "Select * from CONSULTATII";
+                da1 = new OracleDataAdapter(str1, connection);
+                ds1 = new DataSet();
+                da1.Fill(ds1, "CONSULTATII");
+                dataGridView2.DataSource = ds1.Tables["CONSULTATII"];
+                comand = new OracleCommandBuilder(da1);
+                txtCautareCons.Text = "";
+                label2.Text = "";
+            }
+            catch (OracleException ex)
+            {
+                label2.Text = "Eroare" + ex.Message.ToString();
+            }
+
+            txtCautare.Text = "";
+        }
+
+        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            label1.Text = "Date gresite";
+        }
+
+        private void dataGridView2_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            label2.Text = "Date gresite";
+            
+        }
+
+        private void btnRestore_Click(object sender, EventArgs e)
+        {
+            str2 = "Select * from VEDERE";
+            da2 = new OracleDataAdapter(str2, connection);
+            ds2 = new DataSet();
+            da2.Fill(ds2, "VEDERE");
+            dataGridView3.DataSource = ds2.Tables["VEDERE"];
+            comand = new OracleCommandBuilder(da2);
+            textBox1.Text = "";
+        }
+
+        private void btnRes_Click(object sender, EventArgs e)
+        {
+            str3 = "Select * from AFECTIUNI";
+            da3 = new OracleDataAdapter(str3, connection);
+            ds3 = new DataSet();
+            da3.Fill(ds3, "AFECTIUNI");
+            dataGridView4.DataSource = ds3.Tables["AFECTIUNI"];
+            comand = new OracleCommandBuilder(da3);
+            txtCautareAfectiune.Text = "";
+        }
+
+        private void btnPieChart_Click(object sender, EventArgs e)
+        {
+            strSql = "Select count(cnp) from pacienti";
+            comanda = new OracleCommand(strSql, connection);
+            comanda.Connection.Open();
+            int numaru = Convert.ToInt32(comanda.ExecuteScalar());
+            strSql = "Select count(nr_consultatie) from consultatii";
+            comanda = new OracleCommand(strSql, connection);
+            int numaru2 = Convert.ToInt32(comanda.ExecuteScalar());
+            strSql = "Select count(diagnostic) from consultatii where diagnostic = 'luxatie'";
+            comanda = new OracleCommand(strSql, connection);
+            int numaru3 = Convert.ToInt32(comanda.ExecuteScalar());
+            float total = numaru + numaru2+ numaru3;
+            float deg1 = (numaru / total) * 360;
+            float deg2 = (numaru2 / total) * 360;
+            float deg3 = (numaru3 / total) * 360;
+            Graphics graphics = pictureBox1.CreateGraphics();
+            Rectangle rect = new Rectangle(10, 10, 150, 150);
+            Brush brush1 = new SolidBrush(Color.Red);
+            Brush brush2 = new SolidBrush(Color.Blue);
+            Brush brush3 = new SolidBrush(Color.Yellow);
+            graphics.Clear(pictureBox1.BackColor);
+            graphics.FillPie(brush1, rect, 0, deg1);
+            graphics.FillPie(brush2, rect, deg1, deg2);
+            graphics.FillPie(brush3, rect, deg1+deg2, deg3);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            pACIENTIBindingSource.CancelEdit();
+            ds.RejectChanges();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            cONSULTATIIBindingSource1.CancelEdit();
+            ds1.RejectChanges();
+        }
+
+        private void btnModCons_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OracleCommandBuilder comanda = new OracleCommandBuilder(da1);
+                da1.Update(ds1.Tables["CONSULTATII"]);
+                label2.Text = "Date medificate!";
+            }
+            catch (OracleException ex)
+            {
+                label2.Text = "Eroare" + ex.Message.ToString();
+            }
+        }
+
+        private void btnAdaugareCons_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OracleCommandBuilder comanda = new OracleCommandBuilder(da1);
+                da1.Update(ds1.Tables["CONSULTATII"]);
+                label2.Text = "Consultatie adaugata cu succes";
+            }
+            catch (OracleException ex)
+            {
+                label2.Text = "Eroare" + ex.Message.ToString();
+            }
+        }
+
+        private void btnStergeCons_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult dialog = MessageBox.Show("Doriti sa stergeti aceasta consultatie?", "Stergere", MessageBoxButtons.YesNo);
+                if (dialog == DialogResult.Yes)
+                {
+                    if (ds1.Tables["CONSULTATII"].Rows.Count > 0)
+                    {
+                        int rownum = (dataGridView2.CurrentCell.RowIndex);
+                        DataRow Linie = ds1.Tables["CONSULTATII"].Rows[rownum];
+                        Linie.Delete();
+                        OracleCommandBuilder comanda = new OracleCommandBuilder(da1);
+                        da1.Update(ds1.Tables["CONSULTATII"]);
+                        label2.Text = "Stergere efectuata cu succes!";
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                label2.Text = "Eroare" + ex.Message.ToString();
+            }
+        }
+
+        private void btnCautare_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                str = "Select * from PACIENTI where CNP = " + "'" + txtCautare.Text + "'";
+                da = new OracleDataAdapter(str, connection);
+                ds = new DataSet();
+                da.Fill(ds, "PACIENTI");
+                dataGridView1.DataSource = ds.Tables["PACIENTI"];
+                comand = new OracleCommandBuilder(da);                       
+            }
+            catch (OracleException ex)
+            {
+                label1.Text = "Eroare" + ex.Message.ToString();
+            }
+
+            try
+            {
+                str1 = "Select * from CONSULTATII where CNP = " + "'" + txtCautare.Text + "'";
+                da1 = new OracleDataAdapter(str1, connection);
+                ds1 = new DataSet();
+                da1.Fill(ds1, "CONSULTATII");
+                dataGridView2.DataSource = ds1.Tables["CONSULTATII"];
+            }
+            catch (OracleException ex)
+            {
+                label2.Text = "Eroare" + ex.Message.ToString();
+            }
+
+        }
+
+        private void btnModificare_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OracleCommandBuilder comanda = new OracleCommandBuilder(da);
+                da.Update(ds.Tables["PACIENTI"]);
+                label1.Text = "Date medificate!";
+            }
+            catch (OracleException ex)
+            {
+                label1.Text = "Eroare" + ex.Message.ToString();
+            }
+        }
+
+        private void btnStergere_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult dialog = MessageBox.Show("Doriti sa stergeti acest pacient?", "Stergere", MessageBoxButtons.YesNo);
+                if (dialog == DialogResult.Yes)
+                {
+                    if (ds.Tables["PACIENTI"].Rows.Count > 0)
+                    {
+                        int rownum = (dataGridView1.CurrentCell.RowIndex);
+                        DataRow Linie = ds.Tables["PACIENTI"].Rows[rownum];
+                        Linie.Delete();
+                        OracleCommandBuilder comanda = new OracleCommandBuilder(da);
+                        da.Update(ds.Tables["PACIENTI"]);
+                        label1.Text = "Stergere efectuata cu succes!";
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                label1.Text = "Eroare" + ex.Message.ToString();
+            }
+        }
 
         public Form1()
         {
@@ -32,7 +343,42 @@ namespace Proiect
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.pACIENTITableAdapter.Fill(this.dataSet1.PACIENTI); 
+            
+            this.cONSULTATIITableAdapter1.Fill(this.dataSet9.CONSULTATII);
+            this.aFECTIUNITableAdapter.Fill(this.dataSet7.AFECTIUNI);
+            this.vEDERETableAdapter.Fill(this.dataSet6.VEDERE);
+            this.pACIENTITableAdapter.Fill(this.dataSet4.PACIENTI);
+            this.pACIENTITableAdapter.Fill(this.dataSet4.PACIENTI);
+
+            connection = new OracleConnection("DATA SOURCE=localhost:1521/XE;PASSWORD=student;PERSIST SECURITY INFO=True;USER ID=STUDENT");
+
+            str = "Select * from Pacienti";
+            da = new OracleDataAdapter(str, connection);
+            ds = new DataSet();
+            da.Fill(ds, "PACIENTI");
+            dataGridView1.DataSource = ds.Tables["PACIENTI"];
+            comand = new OracleCommandBuilder(da);
+
+            str1 = "Select * from CONSULTATII";
+            da1 = new OracleDataAdapter(str1, connection);
+            ds1 = new DataSet();
+            da1.Fill(ds1, "CONSULTATII");
+            dataGridView2.DataSource = ds1.Tables["CONSULTATII"];
+            comand = new OracleCommandBuilder(da1);
+
+            str2 = "Select * from VEDERE";
+            da2 = new OracleDataAdapter(str2, connection);
+            ds2 = new DataSet();
+            da2.Fill(ds2, "VEDERE");
+            dataGridView3.DataSource = ds2.Tables["VEDERE"];
+            comand = new OracleCommandBuilder(da2);
+
+            str3 = "Select * from AFECTIUNI";
+            da3 = new OracleDataAdapter(str3, connection);
+            ds3 = new DataSet();
+            da3.Fill(ds3, "AFECTIUNI");
+            dataGridView4.DataSource = ds3.Tables["AFECTIUNI"];
+            comand = new OracleCommandBuilder(da3);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -40,176 +386,17 @@ namespace Proiect
 
         }
 
-        private void pacientiToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //dataGridView1.Visible = true;
-        }
-
         private void btnAdaugaPacient_Click(object sender, EventArgs e)
         {
-            dataGridView1.Visible = true;
-            string cnpPacient = textCNPPacient.Text;
-            getDBDate(cnpPacient);
-            string adresa = textAdresa.Text;
-            DateTime today = DateTime.Today;
-            DateTime birthDay = DateTime.Today;
-            //DateTime birthDay = dateTimePicker1.Value;
-            double day = (today - birthDay).TotalDays;
-            int varsta = Convert.ToInt16(day) / 365;
-            string dbDate = dbDay + "-" + dbMonth + "-" + dbYear;
             try
             {
-                connection.Open();
-                strSql = "Insert into pacienti values(" + cnpPacient + ",'" +
-                    adresa + "','" + dbDate + "'," + varsta + ")" ;
-                comand = new OracleCommand(strSql, connection);
-                comand.ExecuteNonQuery();
-                textCNPPacient.Clear();
-                textAdresa.Clear();
-                this.dataGridView1.Update();
-                this.dataGridView1.Refresh();
+                OracleCommandBuilder comanda = new OracleCommandBuilder(da);
+                da.Update(ds.Tables["PACIENTI"]);
+                label1.Text = "Pacient adaugat cu succes";
             }
             catch (OracleException ex)
             {
-                MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                {
-                    connection.Close();
-                }
-            }
-        }
-
-        private void putTextFieldsOnVisible(TextBox text1, TextBox text2, TextBox text3, TextBox text4)
-        {
-            text1.Visible = true;
-            text2.Visible = true;
-            text3.Visible = true;
-            text4.Visible = true;
-        }
-
-        private void adaugareToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            putTextFieldsOnVisible(textCNPPacient, textAdresa,textDataNasterii, textVarsta);
-            label1.Visible = true;
-            label2.Visible = true;
-            label3.Visible = true;
-            label4.Visible = true;
-            btnAdaugaPacient.Visible = true;
-        }
-
-        private void textCNPPacient_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            char ch = e.KeyChar;
-            if(!Char.IsDigit(ch) && ch!=8)
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void getDBDate(string luna)
-        {
-            //double partialCnp = Convert.ToInt64(cnp) / 100000000;
-            //double partialForDay = Convert.ToInt64(cnp) / 1000000;
-            //double month = partialCnp % 100;
-            //dbYear = (Convert.ToInt16(partialCnp % 10000)/100).ToString();
-           // dbDay = (partialForDay % 10).ToString();
-            switch (Convert.ToInt32(luna))
-            {
-                case 1:
-                    dbMonth = "JAN";
-                    break;
-                case 2:
-                    dbMonth = "FEB";
-                    break;
-                case 3:
-                    dbMonth = "MAR";
-                    break;
-                case 4:
-                    dbMonth = "APR";
-                    break;
-                case 5:
-                    dbMonth = "MAY";
-                    break;
-                case 6:
-                    dbMonth = "JUN";
-                    break;
-                case 7:
-                    dbMonth = "JUL";
-                    break;
-                case 8:
-                    dbMonth = "AUG";
-                    break;
-                case 9:
-                    dbMonth = "SEPT";
-                    break;
-                case 10:
-                    dbMonth = "OCT";
-                    break;
-                case 11:
-                    dbMonth = "NOV";
-                    break;
-                case 12:
-                    dbMonth = "DEC";
-                    break;
-            }
-        }
-
-        private void textCNPPacient_TextChanged(object sender, EventArgs e)
-        {
-            if(textCNPPacient.Text == "")
-            {
-                cnp = 0; anul = 0; luna = 0; zi = 0;
-            }
-            else
-            {
-                try
-                {
-                    cnp = Convert.ToDouble(textCNPPacient.Text);
-                    anul = (Convert.ToInt32(cnp / 10000000000)) % 100;
-                    luna = ((Convert.ToInt32(cnp / 100000000)) % 10000) % 100;
-                    zi = ((Convert.ToInt32(cnp / 1000000)) % 1000000) % 100;
-                } catch(MyException )
-                {
-                    Console.WriteLine("{0} First exception caught.");
-                }
-                
-            } 
-        }
-
-        private void textCNPPacient_Leave(object sender, EventArgs e)
-        {
-            cnp = Convert.ToDouble(textCNPPacient.Text);
-            sex = Convert.ToInt32(cnp / 1000000000000)-1;
-            anul =( Convert.ToInt32(cnp / 10000000000)) % 100;
-            luna = ((Convert.ToInt32(cnp / 100000000)) % 10000) % 100;
-            zi = ((Convert.ToInt32(cnp / 1000000)) % 1000000) % 100;
-            DateTime today = DateTime.Today;
-            DateTime birthDay = Convert.ToDateTime("0" + zi + "/0" + luna + "/" + anul);
-            double day = (today - birthDay).TotalDays;
-            int varsta = Convert.ToInt16(day) / 365;
-            getDBDate(luna.ToString());
-            determineBirthdayYear(sex, anul.ToString());
-            textDataNasterii.Text = zi.ToString() + "/" + dbMonth + "/" + newYear;
-            //  textVarsta.Text = varsta.ToString();
-            textVarsta.Text = newYear.ToString();
-        }
-        
-        private void determineBirthdayYear(int sex, string an) 
-        {
-            if(sex == 1 || sex==2)
-            {
-                newYear = "19" + an;
-            }
-            else if(sex == 3 || sex == 4)
-            {
-                newYear = "18" + an;
-            }
-            else if(sex == 5 || sex == 6)
-            {
-                newYear = "20" + an;
+                label1.Text = "Eroare" + ex.Message.ToString();
             }
         }
     }
