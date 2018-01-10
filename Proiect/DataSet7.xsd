@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet7" targetNamespace="http://tempuri.org/DataSet7.xsd" xmlns:mstns="http://tempuri.org/DataSet7.xsd" xmlns="http://tempuri.org/DataSet7.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="ConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="ConnectionString (Settings)" ParameterPrefix=":" PropertyReference="ApplicationSettings.Proiect.Properties.Settings.GlobalReference.Default.ConnectionString" Provider="Oracle.ManagedDataAccess.Client" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="AFECTIUNITableAdapter" GeneratorDataComponentClassName="AFECTIUNITableAdapter" Name="AFECTIUNI" UserDataComponentName="AFECTIUNITableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="ConnectionString (Settings)" DbObjectName="STUDENT.AFECTIUNI" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT CNP, NUME, PRENUME, DATA_NASTERII, DIAGNOSTIC FROM STUDENT.AFECTIUNI</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CNP" DataSetColumn="CNP" />
+              <Mapping SourceColumn="NUME" DataSetColumn="NUME" />
+              <Mapping SourceColumn="PRENUME" DataSetColumn="PRENUME" />
+              <Mapping SourceColumn="DATA_NASTERII" DataSetColumn="DATA_NASTERII" />
+              <Mapping SourceColumn="DIAGNOSTIC" DataSetColumn="DIAGNOSTIC" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet7" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="DataSet7" msprop:Generator_UserDSName="DataSet7">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="AFECTIUNI" msprop:Generator_TableClassName="AFECTIUNIDataTable" msprop:Generator_TableVarName="tableAFECTIUNI" msprop:Generator_TablePropName="AFECTIUNI" msprop:Generator_RowDeletingName="AFECTIUNIRowDeleting" msprop:Generator_RowChangingName="AFECTIUNIRowChanging" msprop:Generator_RowEvHandlerName="AFECTIUNIRowChangeEventHandler" msprop:Generator_RowDeletedName="AFECTIUNIRowDeleted" msprop:Generator_UserTableName="AFECTIUNI" msprop:Generator_RowChangedName="AFECTIUNIRowChanged" msprop:Generator_RowEvArgName="AFECTIUNIRowChangeEvent" msprop:Generator_RowClassName="AFECTIUNIRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CNP" msprop:Generator_ColumnVarNameInTable="columnCNP" msprop:Generator_ColumnPropNameInRow="CNP" msprop:Generator_ColumnPropNameInTable="CNPColumn" msprop:Generator_UserColumnName="CNP" type="xs:long" />
+              <xs:element name="NUME" msprop:Generator_ColumnVarNameInTable="columnNUME" msprop:Generator_ColumnPropNameInRow="NUME" msprop:Generator_ColumnPropNameInTable="NUMEColumn" msprop:Generator_UserColumnName="NUME">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PRENUME" msprop:Generator_ColumnVarNameInTable="columnPRENUME" msprop:Generator_ColumnPropNameInRow="PRENUME" msprop:Generator_ColumnPropNameInTable="PRENUMEColumn" msprop:Generator_UserColumnName="PRENUME">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DATA_NASTERII" msprop:Generator_ColumnVarNameInTable="columnDATA_NASTERII" msprop:Generator_ColumnPropNameInRow="DATA_NASTERII" msprop:Generator_ColumnPropNameInTable="DATA_NASTERIIColumn" msprop:Generator_UserColumnName="DATA_NASTERII" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DIAGNOSTIC" msprop:Generator_ColumnVarNameInTable="columnDIAGNOSTIC" msprop:Generator_ColumnPropNameInRow="DIAGNOSTIC" msprop:Generator_ColumnPropNameInTable="DIAGNOSTICColumn" msprop:Generator_UserColumnName="DIAGNOSTIC">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
